@@ -1,13 +1,24 @@
 from moviepy.editor import *
+from quote_img import create_text_image
 
 bg_path = "./assets/bg.png"
-quote = "The world is simple"
+quote = create_text_image(text="Hello baby")
+
+#Open photo, convert it to avoid error
+photo = "./assets/calm/Vagabond1.png"
+
+def img_combine():
+    """Combines quote image with desired image"""
+
+def vid_combine():
+    """Combines quote image with desired video"""
 
 bg = ImageClip(bg_path, duration=4).set_fps(30)
 
-txt = TextClip(txt=quote).set_position(("center", "top"))
+quote_clip = ImageClip(img=quote).set_position(("center", "top")).set_duration(4)
 
+photo_clip = ImageClip(img=photo).set_position("center").set_duration(4)
 
-video = CompositeVideoClip([bg, txt])
+video = CompositeVideoClip([bg, photo_clip, quote_clip])
 
 video.write_videofile("./output/testvideo.mp4", codec="libx264")

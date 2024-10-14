@@ -1,11 +1,12 @@
 from moviepy.editor import *
+from moviepy.video.fx.resize import resize
 from quote_img import create_text_image
 
 bg_path = "./assets/bg.png"
-quote = create_text_image(text="Hello baby")
+quote = create_text_image(text="Trying out long quote bla bla bla")
 
 #Open photo, convert it to avoid error
-photo = "./assets/calm/Vagabond1.png"
+photo = "./assets/somepic.png"
 
 def img_combine():
     """Combines quote image with desired image"""

@@ -1,0 +1,1 @@
+# This should initiate the folder structure for project

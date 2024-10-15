@@ -3,7 +3,7 @@ from moviepy.video.fx.resize import resize
 from quote_img import create_text_image
 
 bg_path = "./assets/bg.png"
-quote = create_text_image(text="Trying out long quote bla bla bla")
+quote = create_text_image(text="Trying out long quote bla bla bla. Like really long quote for real man")
 
 #Open photo, convert it to avoid error
 photo = "./assets/somepic.png"

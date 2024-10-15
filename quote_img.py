@@ -10,28 +10,29 @@ def text_format(text_raw):
     if len(text) > 45:
         text = ""
         lines = [""]
-        text_len = 0
+        line_len = 0
         for i in text_arr:
-            text_len += len(i) 
-            if text_len >=30:
-                line_count+=1
+            # Count length of each added line
+            line_len += len(i) 
+            if line_len >=30:
+                # Add new element to the list representing new line
+                line_count += 1
                 lines.append(i+" ")
-                text_len = len(i)
+                line_len = len(i)
             else:
+                # Add text to existing line
                 lines[line_count] += i + " "
 
-        #get rid of whitespaces at the end
+        # Get rid of whitespaces at the end of each line
         lines = [i[:-1] for i in lines]
 
+        # Convert list to formatted text
         for i in lines:
             text += i+"\n"
 
         return (text, line_count)
     
     return (text, line_count)
-
-
-
 
 def create_text_image(text, font_size=50, text_position=(540, 75), text_color="black", bg_color="white", output_path="./assets/temp/quote_image.png"):
     """Creates a white box with specified quote
@@ -68,7 +69,6 @@ def create_text_image(text, font_size=50, text_position=(540, 75), text_color="b
     # Add the text to the image at the calculated position
     d.text((text_x, text_y), text, font=font, fill=text_color)
 
-    # Save the image to the specified output path
     img.save(output_path)
     return output_path
 

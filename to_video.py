@@ -15,25 +15,26 @@ def img_resizer(img_path, base_width=1080):
     hsize = int((float(img.size[1]) * float(wpercent)))
 
     img = img.resize((base_width, hsize), Image.Resampling.LANCZOS)
+
     return img
 
 
 
 def img_to_img(quote_path, img_path="./assets/Calm/Vagabond1.jpg", output_path="./output"):
-    """Function that accepts input image to produce formatted image
+    """Function that accepts input image to produces formatted image
     This is more efficient then producing a video out of image"""
     
-    # Create a black background
     bg = Image.new("RGB", (1080, 1920), "black")
 
-    img = Image.open(img_path)
+    # img = Image.open(img_path)
+    img = img_resizer(img_path)
     quote = Image.open(quote_path)
 
-    bg.paste(img, (0,250))
+    bg.paste(img, (0,150))
     bg.paste(quote, (0,0))
 
     bg.save("./output/output_img.png")
 
-quote = create_text_image(text="Trying out long quote bla bla bla. Like really long quote for real man")
+quote = create_text_image("The text is ojbogjbijr long. Try again latter cuz its veryyyyyyy looong")
 
 img_to_img(quote_path=quote)

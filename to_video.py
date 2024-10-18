@@ -33,13 +33,13 @@ def img_to_img(quote_path, bg_path="./assets/bg.png", img_path="./assets/Calm/Va
     img = img_resizer(img_path)
     quote = Image.open(quote_path)
 
-    bg.paste(img, (0,150))
+    bg.paste(img, (0,quote.size[1]))
     bg.paste(quote, (0,0))
 
     bg.save(output_path)
     return output_path
 
-def img_to_video(quote_path, duration=10, fps=30, bg_path="./assets/bg.png", img_path="./assets/Calm/Vagabond1.jpg", output_path="./output"):
+def img_to_video(quote_path, vid_pos, duration=10, fps=30, bg_path="./assets/bg.png", img_path="./assets/Calm/Vagabond1.jpg", output_path="./output"):
     """Function that accepts input image to produce formatted image
     in a form of a video of specified duration"""
     
@@ -56,8 +56,26 @@ def img_to_video(quote_path, duration=10, fps=30, bg_path="./assets/bg.png", img
         video.write_videofile(output_path+"/outputvideo.mp4", codec="libx264", fps=fps)
     return None
 
+def video_to_video(quote_path, bg_path="./assets/bg.png", video_path="./assets/Sad/Sad1.mp4", output_path="./output"):
+    """Function that accepts quote and video as input
+    to save formatted video to specified folder"""
+    quote_img = Image.open(quote_path)
+    d_from_top = quote_img.size[1]
+
+    bg = ImageClip(bg_path)
+    video_clip = VideoFileClip(video_path,).set_position(("center", d_from_top))
+    quote_clip = ImageClip(quote_path).set_position(("center", "top"))
+
+    video = CompositeVideoClip([bg, quote_clip, video_clip]).set_duration(video_clip.duration)
+
+    try:
+        video.write_videofile(output_path+"/outputvideo.mp4", codec="libx264", threads = 8)
+    except:
+        video.write_videofile(output_path+"/outputvideo.mp4", codec="libx264")
+    return None
 
 quote = create_text_image("The text is ojbogjbijr long. Try again latter cuz its veryyyyyyy looong")
 
 # img_to_img(quote_path=quote)
-img_to_video(quote)
+# img_to_video(quote)
+video_to_video(quote)

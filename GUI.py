@@ -37,13 +37,24 @@ def edit():
     
     choice = selected_value.get()
     quote_text = quote_entry.get("1.0", tk.END)
+    duration = duration_entry.get()
+    
+    if duration == "":
+        duration = 10
 
     try:
         quote_path = create_text_image(text=quote_text)
         if choice == "img-to-img":
             img_to_img(quote_path, img_path=file_path, output_path=output_path)
-
             root.quit()
+        elif choice == "img-to-video":
+            img_to_video(quote_path, duration=duration, img_path=file_path, output_path=output_path)
+            root.quit()
+        elif choice == "video-to-video":
+            video_to_video(quote_path, duration=duration, video_path=file_path, output_path=output_path)
+            root.quit()
+        else:
+            messagebox.showinfo("Error", "Please choose the editing mode (e.g. img-to-img)")
     except:
         messagebox.showinfo("Error", "An error has occured.\nMake sure you have selected file and chosen correct action(e.g. img-to-img)")
 

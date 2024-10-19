@@ -39,7 +39,7 @@ def img_to_img(quote_path, bg_path="./assets/bg.png", img_path="./assets/Calm/Va
     bg.save(output_path+"/output_img.png")
     return output_path+"/output_img.png"
 
-def img_to_video(quote_path, duration=10, fps=30, bg_path="./assets/bg.png", img_path="./assets/Calm/Vagabond1.jpg", output_path="./output"):
+def img_to_video(quote_path, duration=0, fps=30, bg_path="./assets/bg.png", img_path="./assets/Calm/Vagabond1.jpg", output_path="./output"):
     """Function that accepts input image to produce formatted image
     in a form of a video of specified duration"""
     
@@ -56,7 +56,7 @@ def img_to_video(quote_path, duration=10, fps=30, bg_path="./assets/bg.png", img
         video.write_videofile(output_path+"/outputvideo.mp4", codec="libx264", fps=fps)
     return None
 
-def video_to_video(quote_path, bg_path="./assets/bg.png", video_path="./assets/Sad/Sad1.mp4", output_path="./output"):
+def video_to_video(quote_path, duration=0, bg_path="./assets/bg.png", video_path="./assets/Sad/Sad1.mp4", output_path="./output"):
     """Function that accepts quote and video as input
     to save formatted video to specified folder"""
     quote_img = Image.open(quote_path)
@@ -66,15 +66,18 @@ def video_to_video(quote_path, bg_path="./assets/bg.png", video_path="./assets/S
     video_clip = VideoFileClip(video_path,).set_position(("center", d_from_top))
     quote_clip = ImageClip(quote_path).set_position(("center", "top"))
 
-    video = CompositeVideoClip([bg, quote_clip, video_clip]).set_duration(video_clip.duration)
+    if duration == 0:
+        video = CompositeVideoClip([bg, quote_clip, video_clip]).set_duration(video_clip.duration)
+    else:
+        video = CompositeVideoClip([bg, quote_clip, video_clip]).set_duration(duration)
 
     try:
-        video.write_videofile(output_path+"outputvideo.mp4", codec="libx264", threads = 8)
+        video.write_videofile(output_path+"/outputvideo.mp4", codec="libx264", threads = 8)
     except:
-        video.write_videofile(output_path+"outputvideo.mp4", codec="libx264")
+        video.write_videofile(output_path+"/outputvideo.mp4", codec="libx264")
     return None
 
-quote = create_text_image("The text is ojbogjbijr long. Try again latter cuz its veryyyyyyy looong")
+# quote = create_text_image("The text is ojbogjbijr long. Try again latter cuz its veryyyyyyy looong")
 
 # img_to_img(quote_path=quote, output_path="C:/Users/agnen/OneDrive/Desktop/HSO")
 # img_to_video(quote)

@@ -2,21 +2,19 @@ import tkinter as tk
 from tkinter import filedialog, simpledialog
 import random
 import os
+import pandas as pd
+import random
+
 
 class SimpleApp:
     def __init__(self, root):
-        self.root = root
-        self.root.title("My Awesome Video Creator")  # Set the name of the app in the window title
-        self.root.geometry("400x350")
+        
         
         # App Name Label (big text within the window)
-        app_label = tk.Label(root, text="My Awesome Video Creator", font=("Arial", 16))
-        app_label.pack(pady=10)
+        
         
         # Quote Input
-        self.quote_entry = tk.Entry(root, width=40)
-        self.quote_entry.pack(pady=5)
-        self.quote_entry.insert(0, "Enter your quote here...")
+        
         
         # Button for Random Quote
         random_quote_btn = tk.Button(root, text="Get Random Quote", command=self.get_random_quote)
@@ -99,7 +97,53 @@ class SimpleApp:
         # Close the app after submit
         self.root.destroy()
 
-# Running the app
+
+def random_quote():
+    global quote_entry
+    try:
+        quotes_df = pd.read_csv("./assets/filtered_data.csv", sep=";")
+        random_row = random.randint(1, len(quotes_df))
+        quote = quotes_df.loc[random_row]["QUOTE"]
+    except:
+        quote = "Quotes not found"
+
+    quote_entry.delete("1.0", tk.END)
+    quote_entry.insert("1.0", quote)
+    
+def import_file():
+    file_path = filedialog.askopenfilename(title="Select a file")
+
+
 root = tk.Tk()
-app = SimpleApp(root)
+root.title("EasyReel by Vlad")
+root.geometry("400x500")
+root.configure(bg='#72BF78')
+
+app_label = tk.Label(root, text="EasyReel\nMaking brainrot has never been easier!", font=("Arial", 14), bg='#72BF78')
+app_label.pack()
+
+# Quote frame
+quote_frame = tk.Frame(root, bg="#A0D683")
+quote_label = tk.Label(quote_frame, text="Enter your quote here", bg="#A0D683")
+quote_entry = tk.Text(quote_frame, width=45, height=2, bg="#FEFF9F")
+
+random_quote_button = tk.Button(quote_frame, text="Random quote", command=random_quote, bg="#FEFF9F", relief=tk.FLAT)
+
+quote_label.pack(pady=5)
+quote_entry.pack(padx=5)
+random_quote_button.pack(pady=10)
+quote_frame.pack()
+
+# File uploader frame
+file_frame = tk.Frame(root, bg="#A0D683")
+file_label = tk.Label(file_frame, text="Choose your file (photo or image)", bg="#A0D683")
+file_button = tk.Button(file_frame, text="Import file", command=import_file, bg="#FEFF9F", relief=tk.FLAT)
+
+file_label.pack(padx=95)
+file_button.pack(pady=10)
+file_frame.pack(pady=10)
+
+quote_text = quote_entry.get("1.0", tk.END)
+
+# app = SimpleApp(root)
 root.mainloop()

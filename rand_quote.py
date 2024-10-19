@@ -1,7 +1,7 @@
 import pandas as pd
 import random
 
-quotes_df = pd.read_csv("./assets/Quotes.csv", sep=";")
+quotes_df = pd.read_csv("./assets/filtered_data.csv", sep=";")
 
 random_row = random.randint(1, len(quotes_df))
 

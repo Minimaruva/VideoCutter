@@ -20,7 +20,7 @@ def img_resizer(img_path, base_width=1080):
 
 
 
-def img_to_img(quote_path, bg_path="./assets/bg.png", img_path="./assets/Calm/Vagabond1.jpg", output_path="./output/output_img.png"):
+def img_to_img(quote_path, bg_path="./assets/bg.png", img_path="./assets/Calm/Vagabond1.jpg", output_path="./output"):
     """Function that accepts input image to produces formatted image
     This is more efficient then producing a video out of image"""
     
@@ -36,10 +36,10 @@ def img_to_img(quote_path, bg_path="./assets/bg.png", img_path="./assets/Calm/Va
     bg.paste(img, (0,quote.size[1]))
     bg.paste(quote, (0,0))
 
-    bg.save(output_path)
-    return output_path
+    bg.save(output_path+"/output_img.png")
+    return output_path+"/output_img.png"
 
-def img_to_video(quote_path, vid_pos, duration=10, fps=30, bg_path="./assets/bg.png", img_path="./assets/Calm/Vagabond1.jpg", output_path="./output"):
+def img_to_video(quote_path, duration=10, fps=30, bg_path="./assets/bg.png", img_path="./assets/Calm/Vagabond1.jpg", output_path="./output"):
     """Function that accepts input image to produce formatted image
     in a form of a video of specified duration"""
     
@@ -69,13 +69,13 @@ def video_to_video(quote_path, bg_path="./assets/bg.png", video_path="./assets/S
     video = CompositeVideoClip([bg, quote_clip, video_clip]).set_duration(video_clip.duration)
 
     try:
-        video.write_videofile(output_path+"/outputvideo.mp4", codec="libx264", threads = 8)
+        video.write_videofile(output_path+"outputvideo.mp4", codec="libx264", threads = 8)
     except:
-        video.write_videofile(output_path+"/outputvideo.mp4", codec="libx264")
+        video.write_videofile(output_path+"outputvideo.mp4", codec="libx264")
     return None
 
 quote = create_text_image("The text is ojbogjbijr long. Try again latter cuz its veryyyyyyy looong")
 
-# img_to_img(quote_path=quote)
+# img_to_img(quote_path=quote, output_path="C:/Users/agnen/OneDrive/Desktop/HSO")
 # img_to_video(quote)
-video_to_video(quote)
+# video_to_video(quote)

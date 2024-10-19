@@ -1,9 +1,14 @@
 import tkinter as tk
-from tkinter import filedialog, simpledialog
+from tkinter import filedialog, simpledialog, messagebox
 import random
 import os
 import pandas as pd
 import random
+from to_video import *
+from quote_img import create_text_image
+
+output_path="./output"
+
 
 def random_quote():
     global quote_entry
@@ -24,6 +29,23 @@ def import_file():
 def output_folder():
     global output_path
     output_path = filedialog.askdirectory(title="Select the output path")
+
+def edit():
+    global file_path
+    global output_path
+    global selected_value
+    
+    choice = selected_value.get()
+    quote_text = quote_entry.get("1.0", tk.END)
+
+    try:
+        quote_path = create_text_image(text=quote_text)
+        if choice == "img-to-img":
+            img_to_img(quote_path, img_path=file_path, output_path=output_path)
+
+            root.quit()
+    except:
+        messagebox.showinfo("Error", "An error has occured.\nMake sure you have selected file and chosen correct action(e.g. img-to-img)")
 
 root = tk.Tk()
 root.title("EasyReel by Vlad")
@@ -51,14 +73,14 @@ file_label = tk.Label(file_frame, text="Choose your file (photo or image)", bg="
 file_button = tk.Button(file_frame, text="Import file", command=import_file, bg="#FEFF9F", relief=tk.FLAT)
 
 duration_label = tk.Label(file_frame, text="Enter duration of video in seconds (optional)", bg="#A0D683")
-duration_entry = tk.Entry(file_frame, width=45, bg="#FEFF9F")
+duration_entry = tk.Entry(file_frame, width=10, bg="#FEFF9F")
 
 # Frame inside of File frame for radio buttons
 radio_frame = tk.Frame(file_frame, bg="#A0D683")
-selected_value = ""
-rb1 = tk.Radiobutton(radio_frame, text="img-to-img", variable=selected_value, value="img-to-img")
-rb2 = tk.Radiobutton(radio_frame, text="img-to-video", variable=selected_value, value="img-to-video")
-rb3 = tk.Radiobutton(radio_frame, text="video-to-video", variable=selected_value, value="video-to-video")
+selected_value = tk.StringVar()
+rb1 = tk.Radiobutton(radio_frame, text="img-to-img", variable=selected_value, value="img-to-img", bg="#FEFF9F")
+rb2 = tk.Radiobutton(radio_frame, text="img-to-video", variable=selected_value, value="img-to-video", bg="#FEFF9F")
+rb3 = tk.Radiobutton(radio_frame, text="video-to-video", variable=selected_value, value="video-to-video", bg="#FEFF9F")
 
 
 file_label.pack(padx=94)
@@ -75,21 +97,17 @@ file_frame.pack(pady=10)
 
 # Submit Frame
 submit_frame = tk.Frame(root, bg="#A0D683")
-output_path_label = tk.Label(submit_frame, text="Choose outputfolder (optional)", bg="#A0D683")
+output_path_label = tk.Label(submit_frame, text="Choose output folder (optional)", bg="#A0D683")
 output_path_button = tk.Button(submit_frame, text="Choose output folder", command=output_folder, bg="#FEFF9F", relief=tk.FLAT)
 
-output_path_label = tk.Label(submit_frame, text="Choose outputfolder (optional)", bg="#A0D683")
-output_path_button = tk.Button(submit_frame, text="Choose output folder", command=output_folder, bg="#FEFF9F", relief=tk.FLAT)
+submit_button = tk.Button(submit_frame, text="Submit for edit", command=edit, bg="#FEFF9F", relief=tk.GROOVE)
 
-output_path_label.pack(padx=94)
+output_path_label.pack(padx=99)
 output_path_button.pack(pady=10)
 
-duration_label.pack(padx=10)
-duration_entry.pack(padx=10)
+submit_button.pack(padx=10, pady=10)
 
 submit_frame.pack(pady=10)
-
-quote_text = quote_entry.get("1.0", tk.END)
 
 # app = SimpleApp(root)
 root.mainloop()

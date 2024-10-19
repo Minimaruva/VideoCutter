@@ -16,7 +16,7 @@ def random_quote(file_path="./assets/Quotes.csv"):
 def text_format(text_raw):
     """Formats text to fit on screen
     Return tuple (formatted text, line count)"""
-    text = text_raw
+    text = text_raw.replace("\n", "")
     text_arr = text.split(" ")
     line_count = 0
 
@@ -90,6 +90,6 @@ def create_text_image(text="", font_size=50, text_position=(540, 75), text_color
     img.save(output_path)
     return output_path
 
-quote = "what is the max length guys guys guys another gay even longer quote. OMG so long I barely how about even LOOOnger"
+# quote = "what is the max length guys guys guys another gay even longer quote. OMG so long I barely how about even LOOOnger"
 
-create_text_image()
+# create_text_image()

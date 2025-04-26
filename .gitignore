@@ -1,2 +1,5 @@
-output/
-Assets/
+output
+assets
+.venv
+__pycache__
+.idea
